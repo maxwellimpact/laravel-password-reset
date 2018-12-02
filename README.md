@@ -1,5 +1,5 @@
 # Laravel Password Reset
-This package extends the default password reset for Laravel to enable custom Token repositories. It also adds an in memory Token Repository for testing.
+Extends the default password reset for Laravel to enable custom Token repositories. It also adds an in memory Token Repository for testing.
 
 ## Setup
 
