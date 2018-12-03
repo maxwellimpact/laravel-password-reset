@@ -12,7 +12,7 @@ In `config/app.php` replace `Illuminate\Auth\Passwords\PasswordResetServiceProvi
 *Note:* If you are using Laravel 5.5 and up and have Package Discovery on, then just remove the original Laravel provider and it should work fine.  
 
 ### Register Your Custom Repository
-Register your custom repository creator in one of your Service Providers boot method.
+Register your custom repository creator in one of your Service Providers boot method. The `in_memory` repository is already registered by default.
 ```php
 public function boot()
 {

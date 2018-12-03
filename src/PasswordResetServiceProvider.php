@@ -3,6 +3,7 @@
 namespace Maxwellimpact\PasswordReset;
 
 use Illuminate\Auth\Passwords\PasswordResetServiceProvider as BasePasswordResetServiceProvider;
+use Illuminate\Support\Facades\Password;
 
 class PasswordResetServiceProvider extends BasePasswordResetServiceProvider
 {
@@ -18,6 +19,18 @@ class PasswordResetServiceProvider extends BasePasswordResetServiceProvider
 
         $this->app->singleton('auth.password', function ($app) {
             return new PasswordBrokerManager($app);
+        });
+    }
+
+    /**
+     * Register the in memory token repository creator.
+     *
+     * @return void
+     */
+    public function boot()
+    {
+        Password::repository('in_memory', function($app, $config) {
+            return new InMemoryTokenRepository($config['expire']);
         });
     }
 }

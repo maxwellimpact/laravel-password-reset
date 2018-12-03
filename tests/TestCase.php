@@ -23,10 +23,6 @@ class TestCase extends Orchestra
         $this->faker = Factory::create();
 
         config(['app.key' => 'blahappkeyblah']);
-
-        Password::repository('in_memory', function($app, $config) {
-            return new InMemoryTokenRepository(10);
-        });
     }
 
     protected function getPackageProviders($app)
