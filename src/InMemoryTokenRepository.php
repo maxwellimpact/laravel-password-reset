@@ -12,12 +12,14 @@ class InMemoryTokenRepository implements TokenRepositoryInterface
 {
     /**
      * The in memory collection of tokens.
+     *
      * @var Collection
      */
     protected $tokens;
 
     /**
      * Seconds until expiry.
+     *
      * @var float|int
      */
     private $expires;
