@@ -22,7 +22,7 @@ class TestCase extends Orchestra
 
         $this->faker = Factory::create();
 
-        config(['app.key' => 'blahappkeyblah']);
+        config(['app.key' => $this->faker->uuid]);
     }
 
     protected function getPackageProviders($app)
