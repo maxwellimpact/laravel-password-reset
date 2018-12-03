@@ -55,10 +55,8 @@ class InMemoryTokenRepository implements TokenRepositoryInterface
 
     public function deleteExpired()
     {
-        $notExpired = $this->tokens->filter(function($token) {
+        $this->tokens = $this->tokens->filter(function($token) {
             return !$token['date_added']->addSeconds($this->expires)->isPast();
         });
-
-        $this->tokens = $notExpired;
     }
 }
