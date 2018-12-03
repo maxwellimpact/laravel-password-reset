@@ -17,8 +17,6 @@ class PasswordManagerBrokerTest extends TestCase
         ]]);
 
         $repository = Password::broker()->getRepository();
-
-        self::assertNotNull($repository);
         self::assertInstanceOf(DatabaseTokenRepository::class, $repository);
     }
 
@@ -31,8 +29,6 @@ class PasswordManagerBrokerTest extends TestCase
         ]]);
 
         $repository = Password::broker()->getRepository();
-
-        self::assertNotNull($repository);
         self::assertInstanceOf(InMemoryTokenRepository::class, $repository);
     }
 }

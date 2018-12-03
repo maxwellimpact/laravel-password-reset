@@ -3,10 +3,8 @@
 namespace Maxwellimpact\PasswordReset;
 
 use Closure;
-use Illuminate\Auth\Passwords\DatabaseTokenRepository;
 use Illuminate\Auth\Passwords\PasswordBrokerManager as BasePasswordBrokerManager;
 use Illuminate\Auth\Passwords\TokenRepositoryInterface;
-use Illuminate\Support\Str;
 
 class PasswordBrokerManager extends BasePasswordBrokerManager
 {
@@ -40,15 +38,13 @@ class PasswordBrokerManager extends BasePasswordBrokerManager
      */
     protected function createTokenRepository(array $config): TokenRepositoryInterface
     {
-        $key = $this->getAppKey();
-
         $repository = $config['repository'] ?? null;
 
         if (isset($this->repositoryCreators[$repository])) {
-            return $this->callRepositoryCreator($repository, $config, $key);
+            return $this->callRepositoryCreator($repository, $config);
         }
 
-        return $this->makeDefaultRepository($config, $key);
+        return parent::createTokenRepository($config);
     }
 
     /**
@@ -56,43 +52,10 @@ class PasswordBrokerManager extends BasePasswordBrokerManager
      *
      * @param string $repository
      * @param array $config
-     * @param string $key
      * @return TokenRepositoryInterface
      */
-    private function callRepositoryCreator(string $repository, array $config, $key): TokenRepositoryInterface
+    private function callRepositoryCreator(string $repository, array $config): TokenRepositoryInterface
     {
-        return $this->repositoryCreators[$repository]($this->app, $config, $key);
-    }
-
-    /**
-     * Fallback to the default if no repository was specified.
-     *
-     * @param array $config
-     * @param $key
-     * @return DatabaseTokenRepository
-     */
-    protected function makeDefaultRepository(array $config, $key): DatabaseTokenRepository
-    {
-        return new DatabaseTokenRepository(
-            $this->app['db']->connection($config['connection'] ?? null),
-            $this->app['hash'],
-            $config['table'],
-            $key,
-            $config['expire']
-        );
-    }
-
-    /**
-     * @return bool|string
-     */
-    protected function getAppKey()
-    {
-        $key = $this->app['config']['app.key'];
-
-        if (Str::startsWith($key, 'base64:')) {
-            $key = base64_decode(substr($key, 7));
-        }
-
-        return $key;
+        return $this->repositoryCreators[$repository]($this->app, $config);
     }
 }

@@ -24,7 +24,7 @@ class TestCase extends Orchestra
 
         config(['app.key' => 'blahappkeyblah']);
 
-        Password::repository('in_memory', function($app, $config, $key) {
+        Password::repository('in_memory', function($app, $config) {
             return new InMemoryTokenRepository(10);
         });
     }

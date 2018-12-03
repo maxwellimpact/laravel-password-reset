@@ -16,8 +16,8 @@ Register your custom repository creator in one of your Service Providers boot me
 ```php
 public function boot()
 {
-    Password::repository('in_memory', function($app, $config, $key) {
-        return new InMemoryTokenRepository(10);
+    Password::repository('in_memory', function($app, $config) {
+        return new InMemoryTokenRepository($config['expire']);
     });
 }
 ```
